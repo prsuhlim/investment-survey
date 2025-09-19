@@ -1,0 +1,46 @@
+/* ===== Demographics form styles ===== */
+
+/* Question list & spacing */
+.qList { list-style: none; padding: 0; margin: 8px 0 16px 0; }
+.qItem { margin-bottom: 1.5rem; }  /* ~5mm gap */
+
+/* Titles & descriptions */
+.qTitle { font-weight: 700; font-size: 1.4rem; }
+.qDesc  { font-size: 0.9rem; color: #555; margin-top: 2px; }
+
+/* Inputs (short answer) */
+.qItem input[type="text"],
+.qItem input[type="number"] {
+  width: 100%;
+  max-width: 360px;
+  padding: 10px 12px;
+  border: 1px solid #d0d0d5;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;  /* white box */
+  color: #111;
+}
+
+/* Choice lists: indent + remove bullets */
+.choiceList { list-style: none; margin: 0 0 0 20px; padding: 0; }
+
+/* Each choice row: radio + text with gap */
+.choice { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+
+/* Custom radios: white circle with black border */
+.choice input[type="radio"] {
+  appearance: none;
+  width: 18px; height: 18px;
+  border: 2px solid #333; border-radius: 50%;
+  background-color: #fff; cursor: pointer;
+}
+.choice input[type="radio"]:checked { background-color: #111; }
+
+/* Inline “Other” text field under the choice */
+.otherInline { margin-top: 6px; }
+
+/* Bottom actions */
+.actions { display: flex; justify-content: flex-end; margin-top: 12px; }
+
+/* Disable state for primary button */
+.startBtn[disabled], .startBtn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
