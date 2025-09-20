@@ -99,22 +99,6 @@ function FlowApp() {
   return null;
 }
 
-/** ---------- Header that only shows "Admin" link if ?admin=1 ---------- */
-function HeaderWithOptionalAdminLink() {
-  const location = useLocation();
-  const params = new URLSearchParams(
-    typeof window !== "undefined" ? window.location.search : ""
-  );
-  const showAdmin = params.get("admin") === "1";
-
-  return (
-    <header style={{ padding: "6px 10px", borderBottom: "1px solid #ddd" }}>
-      <Link to="/" style={{ marginRight: 12 }}>Home</Link>
-      {showAdmin && location.pathname !== "/admin" && <Link to="/admin">Admin</Link>}
-    </header>
-  );
-}
-
 /** ---------- App with routes (no wildcard fallback) ---------- */
 export default function App() {
   return (
