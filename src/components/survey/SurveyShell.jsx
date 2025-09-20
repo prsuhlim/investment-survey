@@ -23,6 +23,9 @@ import { clamp, calcPortfolioEarnings } from "./utils/math";
 import "../../styles/global.css";
 import "../../styles/survey.css";
 
+// NEW: server append helper
+import { sendFinalRow } from "./utils/sendFinalRow";
+
 /** Error boundary */
 class ErrorBoundary extends React.Component {
   constructor(props){ super(props); this.state = { hasError: false, err: null }; }
@@ -47,6 +50,43 @@ export default function SurveyShell(props) {
       <SurveyInner {...props} />
     </ErrorBoundary>
   );
+}
+
+// NEW: pull demographics saved by your Demographics page
+function getDemoFromStorage() {
+  if (typeof window === "undefined") return {};
+  const ls = window.localStorage;
+  return {
+    resp_id:    ls.getItem("resp_id")          || "",
+    age:        ls.getItem("demo_age")         || "",
+    gender:     ls.getItem("demo_gender")      || "",
+    education:  ls.getItem("demo_education")   || "",
+    country:    ls.getItem("demo_country")     || "",
+  };
+}
+
+// NEW: meta bundle for CSV
+function buildMeta({ cfg, scenarios, rows }) {
+  const ua = (typeof navigator !== "undefined" ? navigator.userAgent : "NA");
+
+  // infer starting inflation from first baseline row; fallback to first scenario
+  let started_inflation = "";
+  const firstBase = rows?.find(r => r?.is_baseline);
+  if (firstBase && Number.isFinite(firstBase.pi)) {
+    started_inflation = String(firstBase.pi);
+  } else if (Number.isFinite(scenarios?.[0]?.pi)) {
+    started_inflation = String(scenarios[0].pi);
+  }
+
+  return {
+    started_inflation,
+    order_vector: Array.isArray(scenarios) ? scenarios.map(s => (s?.id ?? s?.label ?? s?.order ?? "")).join("|") : "",
+    pool_group: (cfg?.group ?? cfg?.GROUP ?? cfg?.grp ?? "") || "",
+    pool_seed: String(cfg?.poolseed ?? cfg?.seed ?? cfg?.POOL_SEED ?? cfg?.POOL ?? ""),
+    ua,
+    time_total_ms: rows?.reduce((acc, r) => acc + (Number(r?.ms_spent) || 0), 0) || 0,
+    schema_version: "v1",
+  };
 }
 
 function SurveyInner({
@@ -295,7 +335,7 @@ function SurveyInner({
     fup.advance();
   };
 
-  /** ---------- final follow-up submit ---------- */
+  /** ---------- final follow-up submit (SERVER APPEND HERE) ---------- */
   const factors = [
     "Safe Return from A",
     "Upside Return from B",
@@ -312,7 +352,8 @@ function SurveyInner({
   const q2Complete = factors.every((f) => followChange && followChange[f] !== undefined);
   const canSubmitFinal = q1Complete && q2Complete;
 
-  const handleFinalSubmit = () => {
+  const handleFinalSubmit = async () => {
+    // write the final follow-up row locally
     const finalOrder = scenarios[31]?.order ?? (rows[rows.length - 1]?.order ?? "final");
     const payload = {
       order: finalOrder,
@@ -325,9 +366,22 @@ function SurveyInner({
       ua: typeof navigator !== "undefined" ? navigator.userAgent : "NA",
     };
     const ghost = localStorage.getItem("SURVEY_GHOST_MODE") === "1" || ghostRef.current;
-    if (!ghost) setRows((xs) => [...xs, payload]);
+    let rowsAfter = rows;
+    if (!ghost) {
+      setRows((xs) => [...xs, payload]);
+      rowsAfter = [...rows, payload];
+    }
 
-    if (typeof onFinished === "function") onFinished();
+    // compose demographics + meta and send to server
+    try {
+      const demo = getDemoFromStorage();
+      const meta = buildMeta({ cfg, scenarios, rows: rowsAfter });
+      await sendFinalRow({ rows: rowsAfter, demo, meta });
+      if (typeof onFinished === "function") onFinished();
+    } catch (e) {
+      console.error(e);
+      alert("Saving failed. Please check your connection and retry.");
+    }
   };
 
   /**
@@ -343,7 +397,7 @@ function SurveyInner({
     (alloc.controlsLocked && !showingReason)
   );
 
-  // ---------- refs for follow-ups (INSIDE component) + scroll-on-open ----------
+  // refs for follow-ups + scroll center
   const reasonRef = React.useRef(null);
   const sanityRef = React.useRef(null);
   const midRef    = React.useRef(null);

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting…</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (function () {
+        // If your project is served at https://USER.github.io/<REPO_NAME>/
+        var repoBase = "/<YOUR_REPO_NAME>/"; // e.g., "/investment-survey/"
+        var l = window.location;
+        // Send people back to index at the repo base; React will handle the route after load
+        var newUrl = repoBase + "?redirect=" + encodeURIComponent(l.pathname + l.search + l.hash);
+        window.location.replace(newUrl);
+      })();
+    </script>
+  </head>
+  <body>Redirecting…</body>
+</html>
