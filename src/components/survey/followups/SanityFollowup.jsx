@@ -27,7 +27,7 @@ export default function SanityFollowup({
       {/* Q: Primary reason */}
       <fieldset style={{ border: "none", padding: 0, margin: 0 }}>
         <legend style={{ fontWeight: 600, marginBottom: 6 }}>
-          Q. Which option <u>best describes</u> why you made your decision in <i>this</i> scenario?
+          Q. What <u>best explains</u> your decision in <i>this</i> setting?
         </legend>
 
         {options.map((opt) => (

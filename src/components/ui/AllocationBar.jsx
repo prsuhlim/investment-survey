@@ -1,6 +1,6 @@
-// components/ui/AllocationBar.jsx
+// src/components/ui/AllocationBar.jsx
 import React from "react";
-import "../../styles/survey.css"; // uses your existing styles :contentReference[oaicite:2]{index=2}
+import "../../styles/survey.css";
 
 export default function AllocationBar({
   value,
@@ -13,23 +13,28 @@ export default function AllocationBar({
   return (
     <div
       ref={barRef}
-      className="allocBar allocBar--interactive"
+      className={`allocBar ${!disabled ? "allocBar--interactive" : ""}`}
       role="presentation"
       onPointerDown={onBarPointerDown}
       onTouchStart={onBarPointerDown}
       aria-disabled={disabled}
+      title={!disabled ? "Drag anywhere on the bar to adjust" : undefined}
     >
-      <div className="seg segA" style={{ width: `${100 - value}%`, opacity: disabled ? 0.6 : 1 }} />
-      <div className="seg segB" style={{ width: `${value}%`, opacity: disabled ? 0.6 : 1 }} />
+      {/* Left = A, Right = B */}
+      <div
+        className="seg segA"
+        style={{ width: `${100 - value}%`, opacity: disabled ? 0.6 : 1 }}
+        aria-hidden="true"
+      />
+      <div
+        className="seg segB"
+        style={{ width: `${value}%`, opacity: disabled ? 0.6 : 1 }}
+        aria-hidden="true"
+      />
 
-      <div className="allocTicks" aria-hidden="true">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <span key={i} className="tick" style={{ left: `${(i + 1) * 10}%` }} />
-        ))}
-      </div>
-
+      {/* Circular knob sitting on the boundary */}
       <button
-        className="allocHandle"
+        className="allocHandle allocHandle--knob"
         style={{ left: `${100 - value}%`, opacity: disabled ? 0.6 : 1 }}
         aria-label="Allocation handle"
         role="slider"

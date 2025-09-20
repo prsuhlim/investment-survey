@@ -60,7 +60,7 @@ export default function ScenarioHeader({
       </>
     ) : (
       <>
-        <u>The returns on the options have changed.</u>
+        <u>The outcomes have changed.</u>
         <br />
         Choose how you would allocate your funds under these new conditions.
       </>
@@ -76,7 +76,7 @@ export default function ScenarioHeader({
         marginTop: 12, marginBottom: 8,
         border: "1px solid #e5e7eb",
         borderRadius: 10, padding: 14, fontSize: "1.08rem", lineHeight: 1.5,
-        background: "#fdfcf7",
+        background: "#e7e7e7ff",
       }}
     >
       {/* Small banner ABOVE the header for scenarios 16–31 */}
@@ -162,9 +162,9 @@ export default function ScenarioHeader({
 
         <li>The outcomes above are realized in one year.</li>
         {pi === 6 ? (
-          <li>Assume <b style={{ color: "#ea580c" }}>6% inflation</b> (overall prices increase by 6% over the year).</li>
+          <li>Assume <b style={{ color: "#2563eb" }}>6% inflation</b> (overall prices increase by 6% over the year).</li>
         ) : (
-          <li>Assume <b style={{ color: "#ea580c" }}>0% inflation</b> (overall prices remain the same over the year).</li>
+          <li>Assume <b style={{ color: "#2563eb" }}>0% inflation</b> (overall prices remain the same over the year).</li>
         )}
         <li>Please ignore taxes and fees.</li>
       </ul>

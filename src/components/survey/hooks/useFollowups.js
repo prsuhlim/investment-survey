@@ -45,6 +45,7 @@ export default function useFollowups({
   const baseOptions = React.useRef([
     { key: "balance",       label: "I wanted to diversify (strike a balance between the two options)." },
     { key: "dominance",     label: "I saw that one option was better in every possible outcome." },
+    { key: "guaranteed",    label: "I focused on securing a guaranteed amount before taking risk"},
     { key: "risk_dislike",  label: "I wanted to avoid losses or low returns." },
     { key: "higher_return", label: "I aimed for a higher potential return." },
     { key: "consistency",   label: "I tried to stay consistent with my earlier answers." },

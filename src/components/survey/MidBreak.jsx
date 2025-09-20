@@ -35,7 +35,7 @@ export default function MidBreak({ pct, inflationText, onContinue }) {
 
         <p style={{ marginTop: 0 }}>
           From this point on, the <b>inflation assumption</b> is{" "}
-          <b style={{ color: "#ea580c", fontSize: "1.3em" }}>{inflationText}</b>.{" "}
+          <b style={{ color: "#2563eb", fontSize: "1.3em" }}>{inflationText}</b>.{" "}
           All other settings remain the same as before.
         </p>
 

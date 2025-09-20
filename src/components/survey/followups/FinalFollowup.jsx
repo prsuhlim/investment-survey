@@ -32,7 +32,7 @@ export default function FinalFollowup({
   const canCompare = firstRisky != null && lastRisky != null;
   const deltaRisky = canCompare ? (lastRisky - firstRisky) : 0; // + means toward B
   const didChange  = canCompare ? ne(deltaRisky, 0) : false;
-  const toward     = deltaRisky > 0 ? "B (risky)" : deltaRisky < 0 ? "A (safe)" : "";
+  const toward     = deltaRisky > 0 ? "Option B" : deltaRisky < 0 ? "Option A" : "";
   const absDelta   = Math.abs(deltaRisky);
 
   // --- Auto-detect which SINGLE aspect changed vs the fixed baseline 2% vs 5%/−1% ---
@@ -88,32 +88,7 @@ export default function FinalFollowup({
         <legend style={{ fontWeight: 600, marginBottom: 6 }}>
           Q1. Let’s compare your final allocation to the very first decision you made in this survey.
         </legend>
-
-        {/* Green info box: ONLY the sole changed aspect (auto) */}
-        <div
-          role="note"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            fontSize: ".95rem",
-            color: "#0f5132",
-            background: "#d1e7dd",
-            border: "1px solid #badbcc",
-            borderRadius: 6,
-            padding: "6px 10px",
-            margin: "0 0 10px",
-          }}
-        >
-          <span aria-hidden="true">ℹ️</span>
-          <span>
-            {diffLabel
-              ? <>Everything in this question was the same as the first question <i>except</i>: <b>{diffLabel.replace(/\.$/, "")}</b>.</>
-              : <>Everything in this question was the same as the first question <i>except</i> that exactly one aspect changed.</>
-            }
-          </span>
-        </div>
-
+        The two sets of cards below show a side-by-side comparison of the returns:
         {/* Mini cards: baseline (2% vs 5%/−1%) → current (s,u,d) */}
         {(() => {
           const s0 = 2, u0 = 5, d0 = -1;                   // baseline
@@ -205,34 +180,18 @@ export default function FinalFollowup({
       )}
         {/* If answers DIFFER: show the initial allocation line and the change badge */}
         {didChange && (
-          <>
-            <div style={{ marginBottom: 8 }}>
-              In the very first scenario you allocated{" "}
-              <b>{firstSafe != null ? firstSafe : "—"}%</b> to A and{" "}
-              <b>{firstRisky != null ? firstRisky : "—"}%</b> to B.
-            </div>
-            <div style={{ marginBottom: 10 }}>
-              <span
-                style={{
-                  display: "inline-block",
-                  fontSize: ".95rem",
-                  color: "#92400e",
-                  background: "#fffbeb",
-                  border: "1px solid #fcd34d",
-                  borderRadius: 6,
-                  padding: "4px 8px",
-                }}
-              >
-                Changed by <b>{absDelta}</b> percentage points toward <b>{toward}</b>.
-              </span>
-            </div>
-          </>
+          <div style={{ marginBottom: 10 }}>
+            In the first question you allocated{" "}
+            <b>{firstSafe != null ? firstSafe : "—"}%</b> to A and{" "}
+            <b>{firstRisky != null ? firstRisky : "—"}%</b> to B <br/> —{" "}
+            In this question, you allocated <b>{absDelta}</b> percentage points more toward <b>{toward}</b>.
+          </div>
         )}
 
         {/* Q1 explanation textarea (unchanged placeholder, but wording matches your request) */}
         <label style={{ display: "block", marginBottom: 6 }}>
           {didChange
-            ? "Briefly explain why your allocation changed:"
+            ? "What changed? Briefly explain the reasoning behind your choice."
             : "Briefly explain why your allocation did not change. Would another factor—or a more extreme change—have led you to choose differently?"}
         </label>
         <textarea
@@ -290,6 +249,7 @@ export default function FinalFollowup({
             "Spread (Dispersion) of B",
             "Inflation",
             "Attitude toward risk",
+            "Securing some guranteed return",
             "Balancing Investments",
             "Personal Strategy",
           ].map((factor, i) => (

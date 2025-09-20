@@ -12,18 +12,27 @@ export default function useAllocation({
   onTouched = () => {},
 }) {
   const snap = 1;
-  const defaultB = Number.isFinite(Number(cfg.defaultB)) ? Number(cfg.defaultB) : 100;
+
+  const defaultB = Number.isFinite(Number(cfg.defaultB)) ? Number(cfg.defaultB) : 50;
 
   const [panelUnlocked, setPanelUnlocked] = React.useState(false);
-  const [value, _setValue] = React.useState(() => clamp(Math.round(defaultB / snap) * snap, 0, 100));
+
+  // CHANGED: initial state uses defaultB (now 50 if not provided)
+  const [value, _setValue] = React.useState(() =>
+    clamp(Math.round(defaultB / snap) * snap, 0, 100)
+  );
+
   const [hasTouched, setHasTouched] = React.useState(false);
 
   const unlock = React.useCallback(() => setPanelUnlocked(true), []);
-  const setValue = React.useCallback((v) => {
-    setHasTouched(true);
-    onTouched();
-    _setValue(clamp(Math.round((Number(v) || 0) / snap) * snap, 0, 100));
-  }, [snap, onTouched]);
+  const setValue = React.useCallback(
+    (v) => {
+      setHasTouched(true);
+      onTouched();
+      _setValue(clamp(Math.round((Number(v) || 0) / snap) * snap, 0, 100));
+    },
+    [snap, onTouched]
+  );
 
   React.useEffect(() => {
     // when scenario changes, reset gate and value
@@ -32,6 +41,7 @@ export default function useAllocation({
     if (isConfirmed && cur && Number.isFinite(Number(cur.risky_share))) {
       _setValue(clamp(Math.round((Number(cur.risky_share) || 0) / snap) * snap, 0, 100));
     } else {
+      // CHANGED: fall back to defaultB (50) when scenario changes
       _setValue(clamp(Math.round(defaultB / snap) * snap, 0, 100));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,6 +116,6 @@ export default function useAllocation({
     barRef,
     onBarPointerDown,
     onHandleKeyDown,
-    highlight: false, // optional hook-provided flash flag if you want later
+    highlight: false,
   };
 }

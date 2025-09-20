@@ -46,9 +46,11 @@ export default function AllocationPanel({
   const outcomeVerb = (amt) => (amt >= 0 ? "earning" : "losing");
 
   return (
-    <div className="panel">
+    <div className="panel" style={{ marginTop: 8 }}>
       <div className="panelTitle">How much would you allocate to each option?</div>
-      <div className="panelHint">Drag the triangle or type percentages to reflect your preferred portfolio.</div>
+      <div className="panelHint" style={{ color: "#000000" }}>
+        Drag the handle or input percentages to reflect your preferred portfolio.
+      </div>
 
       <AllocationBar
         value={value}
@@ -104,9 +106,9 @@ export default function AllocationPanel({
         </div>
       </div>
 
-      <div className="mixText">
-        You are investing <b style={{ color: "#7dd3fc" }}>{moneyFmt.format(amountInA(value))}</b> in Option A, and{" "}
-        <b style={{ color: "#c4b5fd" }}>{moneyFmt.format(amountInB(value))}</b> in Option B.
+      <div className="mixText" style={{ textAlign: "center" }}>
+        You are investing <b style={{ color: "#000000" }}>{moneyFmt.format(amountInA(value))}</b> in Option A, and{" "}
+        <b style={{ color: "#000000" }}>{moneyFmt.format(amountInB(value))}</b> in Option B.
       </div>
 
       <div

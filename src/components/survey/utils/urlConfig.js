@@ -1,7 +1,4 @@
-/**
- * Centralized URL param reader → normalized config object
- * ?poolseed=12345&pooltag=ALT&group=A|B|C&order=0,6|6,0&snap=5&defaultB=100&post=/api&amount=100000&currency=USD
- */
+// urlConfig.js
 export function readUrlConfig() {
   const qs = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
 
@@ -21,12 +18,16 @@ export function readUrlConfig() {
     }
   }
 
-  // Robust number parse: only accept positive numbers. Blank/0/NaN → default.
   const amountRaw = qs.get("amount");
   const parsedAmt = Number(amountRaw);
   const amount    = Number.isFinite(parsedAmt) && parsedAmt > 0 ? parsedAmt : 100000;
 
-  const currency = qs.get("currency") ?? "USD";
+  const currency  = qs.get("currency") ?? "USD";
 
-  return { snap, post, defaultB, poolseed, pooltag, group, order, amount, currency };
+  // NEW: admin toggle (URL param or localStorage)
+  const adminFromUrl = qs.get("admin") === "1";
+  const adminFromLS  = (typeof localStorage !== "undefined" && localStorage.getItem("isAdmin") === "1");
+  const isAdmin      = adminFromUrl || adminFromLS;
+
+  return { snap, post, defaultB, poolseed, pooltag, group, order, amount, currency, isAdmin };
 }
