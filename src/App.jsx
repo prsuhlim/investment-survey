@@ -1,13 +1,6 @@
 // src/App.jsx
 import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import Welcome from "./components/Welcome";
 import Demographics from "./components/Demographics";
@@ -46,6 +39,7 @@ class PageBoundary extends React.Component {
 function FlowApp() {
   const navigate = useNavigate();
 
+  // If you want to drop persistence entirely, replace this with: React.useState("welcome")
   const [step, setStep] = React.useState(() => {
     try {
       return localStorage.getItem("app_step_v1") || "welcome";
@@ -99,11 +93,11 @@ function FlowApp() {
   return null;
 }
 
-/** ---------- App with routes (no wildcard fallback) ---------- */
+/** ---------- App with routes ---------- */
 export default function App() {
   return (
     <BrowserRouter>
-      <HeaderWithOptionalAdminLink />
+      {/* header removed */}
       <Routes>
         <Route path="/" element={<FlowApp />} />
         <Route
