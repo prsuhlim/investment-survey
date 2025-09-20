@@ -1,12 +1,22 @@
 /* ===== Demographics form styles ===== */
 
+.introText {
+  margin-bottom: 45px;  
+  font-size: 1rem;
+  color: #333;
+}
+
 /* Question list & spacing */
 .qList { list-style: none; padding: 0; margin: 8px 0 16px 0; }
-.qItem { margin-bottom: 1.5rem; }  /* ~5mm gap */
+.demoForm .qItem { margin-bottom: 2.25rem; }    
+@media (min-width: 768px) {
+  .demoForm .qItem { margin-bottom: 2.75rem; }  
+}
+
 
 /* Titles & descriptions */
-.qTitle { font-weight: 700; font-size: 1.4rem; }
-.qDesc  { font-size: 0.9rem; color: #555; margin-top: 2px; }
+.qTitle { font-weight: 700; font-size: 1.05rem; }
+.qDesc  { font-size: 0.9rem; color: #555; margin-top: 6px; margin-bottom: 10px}
 
 /* Inputs (short answer) */
 .qItem input[type="text"],
@@ -44,3 +54,102 @@
 
 /* Disable state for primary button */
 .startBtn[disabled], .startBtn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+
+
+.eduRow {
+  display: flex;
+  gap: 16px;             
+  flex-wrap: nowrap;
+  margin-top: 16px;   
+}
+
+.eduRow select {
+  width: 50%;           
+  max-width: 220px;     
+  min-width: 140px;     
+  padding: 6px 8px;     
+  border: 1px solid #d0d0d5;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #fff;
+}
+
+
+/* Slider */
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #333;
+  width: clamp(280px, 60vw, 760px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Centers the slider + tiny number as a unit */
+.sliderCenter {
+  display: flex;
+  justify-content: center;           
+  width: 100%;
+}
+
+/* The inner row should size to content so centering actually works */
+.sliderRow {
+  display: inline-flex;              
+  align-items: center;
+  gap: 8px;
+  width: fit-content !important;    
+  margin: 6px auto 0 auto;           
+}
+
+/* Wide, responsive slider  */
+.riskSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: clamp(260px, 60vw, 680px); 
+  height: 10px;
+  border-radius: 6px;
+  background: #ccc;
+  outline: none;
+}
+
+/* Thumb */
+.riskSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+.riskSlider::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
+/* Remove Firefox filled track */
+.riskSlider::-moz-range-progress { background: transparent; }
+
+/* Tiny number box (truly small) */
+.riskNumber {
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 2px 2px;
+  border: 1px solid #d0d0d5;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background: #fff;
+}
+/* Hide spin buttons for tighter sizing */
+.riskNumber::-webkit-outer-spin-button,
+.riskNumber::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.riskNumber[type="number"] { -moz-appearance: textfield; }

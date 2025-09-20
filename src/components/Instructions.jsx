@@ -32,72 +32,36 @@ export default function Instructions({ onNext, onBack }) {
       {/* What to expect */}
       <p style={{ marginTop: 14, marginBottom: 6, fontWeight: 600 }}>Here is what to expect:</p>
 
-      <ul style={{ marginTop: 8, marginBottom: 12, paddingLeft: 22 }}>
+      <ul className="instrList" style={{ marginTop: 8, marginBottom: 12, paddingLeft: 22 }}>
         {/* Two options + Image 1 */}
         <li style={{ marginBottom: 12 }}>
           Each scenario presents two options.
-          <div
-            style={{
-              textAlign: "center",
-              margin: "14px 0 4px 0",
-              padding: "12px",
-              background: "#f9fafb",
-              border: "1px solid #e5e7eb",
-              borderRadius: "8px",
-            }}
-          >
+
+          <figure className="figureCenter inList">
             <img
               src="/images/Explanation1.png"
               alt="Example of Option A (fixed outcome) vs Option B (two-outcome)"
-              style={{
-                maxWidth: "80%",
-                borderRadius: "6px",
-                boxShadow: "0 3px 8px rgba(0,0,0,0.12)",
-                marginBottom: "10px",
-              }}
             />
-            <div style={{ fontSize: ".9rem", color: "#374151" }}>
-              <em><b>Figure 1.</b> How the two options appear on screen.</em>
-            </div>
-          </div>
+            <figcaption><em><b>Figure 1.</b> How the two options appear on screen.</em></figcaption>
+          </figure>
+
           <ul style={{ marginTop: 8, paddingLeft: 18 }}>
             <li><b>Option A:</b> a fixed, guaranteed outcome.</li>
             <li><b>Option B:</b> 50% chance of a “high” outcome and 50% chance of a “low” outcome.</li>
           </ul>
         </li>
 
-        {/* Outcomes change */}
-        <li style={{ marginBottom: 12 }}>
-          The outcomes for A and B change across scenarios.
-        </li>
-
         {/* Slider + Image 2 */}
         <li style={{ marginBottom: 12 }}>
           Use the slider to set how much to allocate to each option.
-          <div
-            style={{
-              textAlign: "center",
-              margin: "12px 0 0 0",
-              padding: "12px",
-              background: "#f9fafb",
-              border: "1px solid #e5e7eb",
-              borderRadius: "8px",
-            }}
-          >
+
+          <figure className="figureCenter inList">
             <img
               src="/images/Explanation2.png"
               alt="Example of the allocation slider and handle"
-              style={{
-                maxWidth: "80%",
-                borderRadius: "6px",
-                boxShadow: "0 3px 8px rgba(0,0,0,0.12)",
-                marginBottom: "10px",
-              }}
             />
-            <div style={{ fontSize: ".9rem", color: "#374151" }}>
-              <em><b>Figure 2.</b> Set your allocation with the slider.</em>
-            </div>
-          </div>
+            <figcaption><em><b>Figure 2.</b> Set your allocation with the slider.</em></figcaption>
+          </figure>
         </li>
 
         {/* Confirm */}
@@ -112,7 +76,7 @@ export default function Instructions({ onNext, onBack }) {
         icon={<AlertTriangle />}
         title="Important:"
       >
-        You may revisit earlier scenarios to view their conditions, but once confirmed, your answers cannot be changed.
+        You may revisit earlier scenarios to view their conditions, but once confirmed, your answers cannot be viewed or changed.
       </Callout>
 
       <hr style={{ margin: "18px 0 18px 0", border: "none", borderTop: "1px solid #ddd" }} />

@@ -72,32 +72,8 @@ ul { margin: 12px 0 22px 20px; font-size: 1rem; }
   h1 { font-size: 2.5rem; }
 }
 
-/* Section/page title block */
-.pageTitle {
-  background-color: #f6f1e9;
-  padding: 16px 24px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-.pageTitle h1 {
-  font-size: 2rem;
-  margin: 0;
-  color: #2a4d7f;
-}
-.pageTitle h2 {
-  margin: 6px 0 0 0;
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: #444;
-}
-
-
-
-
-/* 1) Universal predictable sizing */
 *, *::before, *::after { box-sizing: border-box; }
 
-/* 2) Page container that actually fits phones */
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -107,7 +83,6 @@ ul { margin: 12px 0 22px 20px; font-size: 1rem; }
   .container { padding: 12px; }
 }
 
-/* 3) Type that scales nicely across devices */
 :root {
   --step-1: clamp(14px, 1.4vw + 10px, 16px);  /* base text */
   --step-2: clamp(18px, 2.3vw + 10px, 22px);  /* h2-ish */
@@ -117,10 +92,8 @@ body { font-size: var(--step-1); line-height: 1.5; }
 h1 { font-size: var(--step-3); line-height: 1.2; margin: 0.4em 0; }
 h2 { font-size: var(--step-2); line-height: 1.25; margin: 0.3em 0; }
 
-/* 4) Make all media shrink to fit */
 img, svg, video, canvas { max-width: 100%; height: auto; display: block; }
 
-/* 5) Forms: full-width and touch-friendly */
 input, select, textarea, button {
   font: inherit;                      /* avoids iOS zoom on inputs */
   font-size: 16px;                    /* >=16px to prevent iOS auto-zoom */
@@ -137,31 +110,20 @@ form .qItem { margin-bottom: 14px; }
   border-radius: 8px;
 }
 
-/* 6) Buttons: bigger hit area */
 .startBtn {
   padding: 10px 16px;
   border-radius: 10px;
   min-height: 44px;                   /* finger target */
 }
 
-/* 7) Lists inside lists: keep indentation consistent on mobile */
 ul { padding-left: 1.2em; margin: 0.6em 0; }
 ul ul { padding-left: 1.2em; }
 
-/* 8) “Card” containers don’t overflow on phones */
 .card, .doneBox, .progressWrap, .explainBox {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* 9) Slider area — give the handle room (works even if the slider is custom) */
-.allocBar { min-height: 44px; }
-.allocBar .handle {
-  width: 28px; height: 28px;          /* larger touch target */
-  touch-action: none;                 /* smoother drag */
-}
-
-/* 10) Safe viewport height on mobile (prevents 100vh jumpiness) */
 :root { --vh: 1vh; }
 @supports (height: 100svh) {
   .fullHeight { min-height: 100svh; }
