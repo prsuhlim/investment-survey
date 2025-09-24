@@ -1,6 +1,6 @@
 // src/components/ui/AllocationBar.jsx
 import React from "react";
-import "../../styles/survey.css";
+import "../styles/survey.css";
 
 export default function AllocationBar({
   value,
@@ -10,6 +10,9 @@ export default function AllocationBar({
   onBarPointerDown,
   onHandleKeyDown,
 }) {
+  const pctB = Math.max(0, Math.min(100, Number(value) || 0));
+  const pctA = 100 - pctB;
+
   return (
     <div
       ref={barRef}
@@ -21,27 +24,19 @@ export default function AllocationBar({
       title={!disabled ? "Drag anywhere on the bar to adjust" : undefined}
     >
       {/* Left = A, Right = B */}
-      <div
-        className="seg segA"
-        style={{ width: `${100 - value}%`, opacity: disabled ? 0.6 : 1 }}
-        aria-hidden="true"
-      />
-      <div
-        className="seg segB"
-        style={{ width: `${value}%`, opacity: disabled ? 0.6 : 1 }}
-        aria-hidden="true"
-      />
+      <div className="seg segA" style={{ width: `${pctA}%`, opacity: disabled ? 0.6 : 1 }} />
+      <div className="seg segB" style={{ width: `${pctB}%`, opacity: disabled ? 0.6 : 1 }} />
 
-      {/* Circular knob sitting on the boundary */}
+      {/* Circular knob sitting exactly on the boundary */}
       <button
         className="allocHandle allocHandle--knob"
-        style={{ left: `${100 - value}%`, opacity: disabled ? 0.6 : 1 }}
+        style={{ left: `${pctA}%`, opacity: disabled ? 0.6 : 1 }}
         aria-label="Allocation handle"
         role="slider"
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuenow={value}
-        aria-valuetext={`${value}% in Option B`}
+        aria-valuenow={pctB}
+        aria-valuetext={`${pctB}% in Option B`}
         onKeyDown={onHandleKeyDown}
         tabIndex={disabled ? -1 : 0}
       />

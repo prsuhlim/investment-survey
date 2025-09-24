@@ -1,3 +1,6 @@
+// src/pages/FinalPage.jsx
+// Route: "/final" — Thank-you / completion code page; end of the flow.
+
 import React from "react";
 import "../styles/global.css";
 import "../styles/survey.css";

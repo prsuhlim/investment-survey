@@ -134,3 +134,53 @@ ul ul { padding-left: 1.2em; }
 
 /* 11) Prevent layout blow-ups from long codes/IDs */
 code { overflow-wrap: anywhere; }
+
+/* Center page content and give generous outer margins on big screens */
+body {
+  background: #f5f6f8;
+}
+
+/* The white survey canvas */
+main.container {
+  /* Narrower than full width to reduce overwhelm */
+  width: 90%;
+  max-width: 900px;       /* 90% of a 1000px mental canvas */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* (Optional) slight padding consistency */
+  box-sizing: border-box;
+}
+
+/* ---------- Global line-height system ---------- */
+:root{
+  /* Tweak these two numbers to taste */
+  --lh-base: 1.7;     /* default body text line-height */
+  --lh-tight: 1.35;   /* for headings / compact UI bits */
+}
+
+/* Apply to everything textual by default */
+html, body {
+  line-height: var(--lh-base);
+}
+
+/* Headings: slightly tighter than body */
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--lh-tight);
+}
+
+/* Common text containers */
+main, section, article, aside,
+p, ul, ol, li, label, span, div {
+  line-height: inherit; /* inherit from body unless overridden */
+}
+
+/* Lists: add a little vertical rhythm */
+p { margin: 0 0 0.7em; }
+ul, ol { margin: 0.5em 0 0.9em; padding-left: 1.25em; }
+li { margin: 0.25em 0; }
+
+/* Form controls shouldn't get tall from line-height */
+button, input, select, textarea {
+  line-height: 1.2;
+}

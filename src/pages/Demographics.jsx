@@ -1,5 +1,8 @@
+// src/pages/Demographics.jsx
+// Route: "/demographics" — Gated demographics form with local persistence.
+// Expects props.onNext() to advance in the flow.
 import React from "react";
-import "../styles/demographics.css";
+import "../styles/demographics.css"
 
 const STORAGE_KEY = "demoForm_v2"; // bumped to avoid stale cached shapes
 

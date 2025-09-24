@@ -1,5 +1,5 @@
 import React from "react";
-import { loadJSON, saveJSON } from "../utils/storage";
+import { loadJSON, saveJSON } from "./storage";
 
 export default function useLocalRows(storageName) {
   const [rows, setRows] = React.useState(() => {

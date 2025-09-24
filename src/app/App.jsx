@@ -1,25 +1,32 @@
-// src/App.jsx
+// src/app/App.jsx
 import React from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
-import Welcome from "./components/Welcome";
-import Demographics from "./components/Demographics";
-import Instructions from "./components/Instructions";
-import SurveyShell from "./components/survey/SurveyShell";
-import FinalPage from "./components/FinalPage";
-import AdminConsole from "./admin/AdminConsole";
+// Pages (moved under src/pages/)
+import Welcome from "../pages/Welcome";
+import Demographics from "../pages/Demographics";
+import Instructions from "../pages/Instructions";
+import FinalPage from "../pages/FinalPage";
 
-import "./styles/global.css";
-import "./styles/survey.css";
+// Survey (v2 orchestrator)
+import SurveyShell from "../survey/SurveyShell";
 
-/** ---------- Tiny ErrorBoundary so crashes aren’t a white screen ---------- */
+// Optional admin console
+import AdminConsole from "../admin/AdminConsole";
+
+// Global styles
+import "../styles/global.css";
+import "../styles/survey.css";
+
+/** ---------- Minimal error boundary ---------- */
 class PageBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { err: null };
   }
-  static getDerivedStateFromError(err) { return { err }; }
-  componentDidCatch(err, info) { /* no-op, could log */ }
+  static getDerivedStateFromError(err) {
+    return { err };
+  }
   render() {
     if (this.state.err) {
       return (
@@ -35,21 +42,23 @@ class PageBoundary extends React.Component {
   }
 }
 
-/** ---------- Step-based flow mounted at "/" ---------- */
+/** ---------- Simple step flow mounted at "/" ---------- */
 function FlowApp() {
   const navigate = useNavigate();
 
-  // If you want to drop persistence entirely, replace this with: React.useState("welcome")
+  // Persist where the respondent is in the flow
   const [step, setStep] = React.useState(() => {
     try {
-      return localStorage.getItem("app_step_v1") || "welcome";
+      return localStorage.getItem("app_step_v2") || "welcome";
     } catch {
       return "welcome";
     }
   });
 
   React.useEffect(() => {
-    try { localStorage.setItem("app_step_v1", step); } catch {}
+    try {
+      localStorage.setItem("app_step_v2", step);
+    } catch {}
   }, [step]);
 
   if (step === "welcome") {
@@ -97,7 +106,6 @@ function FlowApp() {
 export default function App() {
   return (
     <BrowserRouter>
-      {/* header removed */}
       <Routes>
         <Route path="/" element={<FlowApp />} />
         <Route

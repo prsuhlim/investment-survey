@@ -1,10 +1,12 @@
 // src/admin/AdminConsole.jsx
 import React from "react";
-import Welcome from "../components/Welcome";
-import Demographics from "../components/Demographics";
-import Instructions from "../components/Instructions";
-import SurveyShell from "../components/survey/SurveyShell";
-import FinalPage from "../components/FinalPage";
+
+import Welcome from "../pages/Welcome";
+import Demographics from "../pages/Demographics";
+import Instructions from "../pages/Instructions";
+import SurveyShell from "../survey/SurveyShell";
+import FinalPage from "../pages/FinalPage";
+
 import "../styles/global.css";
 import "../styles/survey.css";
 

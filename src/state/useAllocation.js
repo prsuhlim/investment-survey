@@ -1,8 +1,10 @@
+// src/state/useAllocation.js
 import React from "react";
-import { clamp } from "../utils/math";
+import { clamp } from "./math";
 
 /**
  * Slider + input interaction, gating, and keyboard/pointer handlers
+ * Robust: does not assume cfg is provided; no conditional hooks.
  */
 export default function useAllocation({
   cfg,
@@ -13,15 +15,12 @@ export default function useAllocation({
 }) {
   const snap = 1;
 
-  const defaultB = Number.isFinite(Number(cfg.defaultB)) ? Number(cfg.defaultB) : 50;
+  const defaultB = Number.isFinite(Number(cfg?.defaultB)) ? Number(cfg.defaultB) : 50;
 
   const [panelUnlocked, setPanelUnlocked] = React.useState(false);
-
-  // CHANGED: initial state uses defaultB (now 50 if not provided)
   const [value, _setValue] = React.useState(() =>
     clamp(Math.round(defaultB / snap) * snap, 0, 100)
   );
-
   const [hasTouched, setHasTouched] = React.useState(false);
 
   const unlock = React.useCallback(() => setPanelUnlocked(true), []);
@@ -34,18 +33,17 @@ export default function useAllocation({
     [snap, onTouched]
   );
 
+  // Reset on scenario/inflation change (always runs)
   React.useEffect(() => {
-    // when scenario changes, reset gate and value
     setPanelUnlocked(false);
     setHasTouched(false);
     if (isConfirmed && cur && Number.isFinite(Number(cur.risky_share))) {
       _setValue(clamp(Math.round((Number(cur.risky_share) || 0) / snap) * snap, 0, 100));
     } else {
-      // CHANGED: fall back to defaultB (50) when scenario changes
       _setValue(clamp(Math.round(defaultB / snap) * snap, 0, 100));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cur?.id, cur?.pi]);
+  }, [cur?.id, cur?.pi, isConfirmed, defaultB]);
 
   const barRef = React.useRef(null);
   const draggingRef = React.useRef(false);

@@ -1,5 +1,5 @@
 import React from "react";
-import { loadInt, saveString } from "../utils/storage";
+import { loadInt, saveString } from "./storage";
 
 /**
  * Manages: current index, maxVisitedIdx, and linear forward navigation.

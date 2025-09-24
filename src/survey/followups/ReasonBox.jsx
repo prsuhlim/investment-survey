@@ -7,7 +7,9 @@ export default function ReasonBox({ value, setValue, onSubmit, disabled }) {
   return (
     <section style={{ marginTop: 24, paddingTop: 16, borderTop: "2px solid #e5e7eb" }}>
       <label htmlFor="reasonBox" style={{ display: "block", marginBottom: 6 }}>
-        <p><b>Q. Briefly explain the reasoning behind your allocation choice in the scenario above.</b></p>
+        <p><b>Q. In one or two sentences, briefly explain <i>why</i> you chose this portfolio.
+           Your response doesn't need to be long or formal - just clear and genuine. (please avoid random or nonsensical
+           replies)</b></p>
       </label>
       <textarea
         id="reasonBox"

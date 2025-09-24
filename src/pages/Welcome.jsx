@@ -1,3 +1,6 @@
+// src/pages/Welcome.jsx
+// Entry page in the flow: Welcome → Demographics → Instructions → Survey → Final.
+
 import React from "react";
 
 export default function Welcome({ onNext }) {

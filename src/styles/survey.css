@@ -1,283 +1,313 @@
+/* ================================
+   Survey UI Design System
+   Scope: Header cards + collapsed chip row
+   Naming: .svy-* to avoid collisions
+   ================================= */
+
+/* ---- Design tokens ---- */
 :root{
+  /* Ink & surfaces */
+  --svy-ink: #2f3a4a;            /* body text */
+  --svy-ink-weak: #5b6677;       /* secondary */
+  --svy-edge: #3b3b3b33;         /* soft border */
+  --svy-panel: #f7f7f7;          /* page bg */
+
+  /* Option A (light) */
   --optA-bg: #e7e5e4;
-  --optA-border: #3e3e3e;
+  --optA-edge: #8b8b8b;
+  --optA-title: #2a3647;
+
+  /* Option B (dark) */
   --optB-bg: #8d8b87;
-  --optB-border: #111827;
-  --ink: #2f3a4a;
-  --ink-weak: rgba(47,58,74,.85);
-  --guide: rgba(47,58,74,.28);
+  --optB-edge: #111827;
+  --optB-title: #2a3647;
+  --optB-text: #2a3647;
+
+  /* Accents */
+  --chance-blue: #334155;
+  --chance-blue-on-dark: #2a3647;
+
+  /* Return pills */
+  --pos-bg: #eafff0;             /* soft green bg */
+  --pos-edge: #166534;           /* green-200 */
+  --pos-ink: #166534;            /* green-800 */
+
+  --neg-bg: #ffecec;             /* soft red bg */
+  --neg-edge: #991b1b;           /* red-200 */
+  --neg-ink: #991b1b;            /* red-800 */
+
+  --zero-bg: #eef2f7;
+  --zero-edge: #dbe2ea;
+  --zero-ink: #3f4a5a;
+
+  --infl-bg: #eff6ff;
+  --infl-edge: #bfdbfe;
+  --infl-ink: #2563eb;
+
+  --warn-bg: #fffbeb;
+  --warn-edge: #fcd34d;
+  --warn-text: #92400e;
+  --warn-strong: #ea580c;
+
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  --svy-font-size: 1.08rem;
+  --svy-line: 1.55;
 }
 
-/* ===== Basic layout ===== */
-
-.progressWrap { margin-top: 16px; margin-bottom: 0; }
+/* survey.css */
+.progressWrap {
+  width: 100%;
+  margin: 0 0 16px;
+}
 .progressBar {
-  height: 8px; width: 100%;
-  background: #ececec;
-  border-radius: 999px; overflow: hidden;
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
 }
-.progressBar .fill { height: 8px; background: #9aa6b2; }
-.progressText { margin-top: 6px; font-size: 0.9rem; color: #6b7280; }
-
-.row {
-  display: grid; grid-template-columns: 1fr; gap: 16px;
-  margin: 10px 0 16px 0;
-}
-@media (min-width: 640px) {
-  .row { grid-template-columns: 1fr 1fr; gap: 20px; }
-}
-.row.gap { gap: 12px; }
-
-/* Optional intro spacing */
-.intro { margin-bottom: 10px; }
-.intro h1 { margin: 0 0 .25rem 0; }
-.intro p { margin: .25rem 0; }
-
-/* Intro title larger */
-.introTitle {
-  margin: 0 0 .5rem 0;
-  font-size: 2rem;
-  font-weight: 750;
-  line-height: 1.2;
+.progressBar .fill {
+  height: 100%;
+  background: #394869;  /* blue-600 */
+  transition: width 0.3s ease;
 }
 
-/* Boxed intro with thin lines (1pt) above & below) */
-.introBox {
-  padding: 5px 0;
-  margin: 0 0 0 0;
+.caseTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 8px 0 16px;
+  color: #2f3a4a;
+  text-align: center;
+}
+.caseTitle .caseTotal {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280; /* gray-500 */
+  margin-left: 2px;
 }
 
-/* ===== Cards ===== */
+/* ---- Base container (optional) ---- */
+main.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 14px 28px;
+  color: var(--svy-ink);
+  background: var(--svy-panel);
+}
 
-.card {
+/* =========================
+   Header (Expanded Screen)
+   ========================= */
+.svy-header { width: 100%; }
+
+.svy-box {
+  margin: 0 0 8px 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px;
+  background: #e7e7e7;
+  font-size: var(--svy-font-size);
+  line-height: var(--svy-line);
+}
+
+/* Inflation note (second half) */
+.svy-inflationNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .95rem;
+  color: var(--warn-text);
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-edge);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: 0 0 8px 0;
+}
+.svy-inflationValue { color: var(--warn-strong); }
+.svy-inflationIcon { display: inline-block; }
+
+/* Instruction list */
+.svy-list {
+  margin: 0;
+  padding-left: 1.4em;
+  list-style-position: outside;
+  line-height: 1.9;
+  font-size: 1.05rem;
+}
+
+/* Two-up grid containing the cards */
+.svy-row {
+  display: grid;
+  grid-template-columns: 350px 350px;
+  gap: 18px;
+  margin-top: 10px;
+  justify-content: center;   /* horizontally center the cards */
+}
+
+/* Card scaffolding */
+.svy-card {
   position: relative;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-  padding: 14px 16px 16px;
-  transition: transform 0.06s ease, box-shadow 0.06s ease, border-color 0.06s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;                 /* equalize heights between A and B */
+  border-radius: var(--radius-card);
+  border: 0.5px solid var(--svy-edge);
+  box-shadow: 0 2px 0 rgba(0,0,0,.06), 0 12px 24px -18px rgba(0,0,0,.25) inset;
+  overflow: hidden;
 }
-.card:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,0.10); }
-.card:focus-within { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.18), 0 4px 14px rgba(0,0,0,0.08); }
+.svy-cardHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 4px 2px 4px;
+}
+.svy-cardBody { padding: 6px; }
 
-/* Very light backgrounds per request */
-.card.optionA{
+/* Option-specific surfaces */
+.svy-optionA {
   background: var(--optA-bg);
-  border-color: var(--optA-border);
-  color: var(--ink);
-}
-.card.optionB{
-  background: var(--optB-bg);
-  border-color: var(--optB-border);
-  color: var(--ink);
+  border-color: var(--optA-edge);
 }
 
-.card.optionA .cardBody,
-.card.optionB .cardBody {
+/* Center the single line in Option A vertically & horizontally */
+.svy-optionA .svy-cardBody {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 60%;
 }
 
-/* Card header */
-.cardHeader {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  justify-content: center;
-  text-align: center;
-}
-.optionBadge {
-  font-size: 12px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase;
-  padding: 4px 8px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.10);
-  background: rgba(255,255,255,0.65);
-}
-.titleText { font-weight: 650; font-size: 20px; }
+.svy-optionA .svy-titleText { color: var(--optA-title); }
+.svy-optionA .svy-chance     { color: var(--chance-blue); }
 
-/* Card body lines */
-.cardBody { font-size: 1rem; }
-.cardBody .bullets { margin: 0; padding-left: 18px; }
-.bullets.tight { padding-left: 14px; }
-.line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 50px;
-  margin: 6px 0;
-}
-.chance {
-  color: #374151;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: .005em;
-}
-
-
-/* Emphasized outcome “pills” */
-.pill {
-  font-weight: 700; font-size: 18px; line-height: 1;
-  padding: 10px 12px; border-radius: 12px;
-  background: #f1f5f9; color: #3d4655;
-  font-variant-numeric: tabular-nums; letter-spacing: .01em; white-space: nowrap;
-  border: 1px solid rgba(0,0,0,0.05);
-}
-.pill.gain   { background: #eaf7ef; color: #0f7a35; border-color: rgba(16,185,129,0.20); }
-.pill.loss   { background: #fdeeee; color: #b44a3e; border-color: rgba(248,113,113,0.22); }
-.pill.neutral{ background: #eef2f7; color: #374151; }
-
-/* ===== Panel ===== */
-
-.panel {
-  background: #e7e7e7ff; border: 1px solid #d1d5db; border-radius: 14px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05); padding: 14px 16px;
-}
-.panelTitle { font-weight: 650; }
-.panelHint  { font-size: 0.9rem; color: #6b7280; margin-bottom: 10px; }
-.actions { display: flex; justify-content: flex-end; margin-top: 10px; }
-.startBtn { border-radius: 12px; }
-
-/* ===== Allocation bar =====
-   - Pill shape with overflow hidden.
-   - A fills from left; B fills from right; they meet at the handle.
-   - Subtle internal 10% guide lines (no ticks below).
-   - Circular knob with halo (visible on both light/dark).
-*/
-
-.allocBar {
-  position: relative;
-  display: block;
-  user-select: none;
-  -webkit-user-select: none;
-  height: 16px;
-  border-radius: 999px;
-  overflow: hidden;                 /* keeps the pill shape */
-  border: 1px solid #111827;
-  margin: 8px 0 12px 0;
-  transition: box-shadow 0.15s ease, transform 0.06s ease;
-}
-.allocBar--interactive { cursor: pointer; }
-.allocBar--interactive:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
-
-/* Segments hug the sides and meet at the handle */
-.allocBar .seg {
-  position: absolute;
-  top: 0; bottom: 0;
-  z-index: 0;
-}
-.allocBar > .segA {
-  left: 0;
-  background: var(--optA-bg);
-}
-.allocBar > .segB {
-  right: 0;
+.svy-optionB {
   background: var(--optB-bg);
-  color: var(--optB-text);
+  border-color: var(--optB-edge);
+}
+.svy-optionB .svy-titleText { color: var(--optB-title); }
+.svy-optionB .svy-chance    { color: var(--chance-blue-on-dark); }
+.svy-optionB .svy-cardBody  { color: var(--optB-text); }
+
+/* Titles and badges */
+.svy-titleText {
+  font-weight: 550;
+  font-size: 1.2rem;
+  letter-spacing: .2px;
 }
 
-/* Internal guide lines (every ~10%) using blend so they show on both halves */
-.allocBar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      to right,
-      transparent 0 9.5%,
-      var(--guide) 9.5% 10%,
-      transparent 10%
-    );
-  z-index: 1;
-  mix-blend-mode: normal; /* normal is fine now that we tuned contrast */
+.svy-optionBadge {
+  display: inline-block;
+  font-weight: 750;
+  font-size: .65rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: #e5e7eb;
+  color: #1f2937;
+  border: 0.5px solid #1f2937;
+}
+.svy-optionB .svy-optionBadge {
+  background: #f3f4f6;
+  color: #111827;
 }
 
-/* ===== Circular knob handle ===== */
-.allocHandle {
-  position: absolute;
-  top: 50%;
-  left: 0;                           /* actual x is set inline via style */
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  cursor: grab;
-  outline: none;
-  border: 0;
-  background: #ffffff;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.25),      /* drop */
-    0 0 0 2px #111827,               /* dark ring */
-    0 0 0 6px rgba(255,255,255,0.55);/* halo so it pops on dark */
-  padding: 0;
-}
-.allocHandle:active { cursor: grabbing; }
-.allocHandle:focus {
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.25),
-    0 0 0 2px #111827,
-    0 0 0 6px rgba(255,255,255,0.55),
-    0 0 0 10px rgba(59,130,246,0.35);
-}
-
-/* If your JSX still renders .allocTicks, hide them (we use internal guides now) */
-.allocTicks { display: none !important; }
-
-/* ===== A/B inputs below the bar ===== */
-.allocInputs {
+/* Chance text + pill rows */
+.svy-line {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: clamp(48px, 10vw, 220px);
-  width: min(100%, 620px);       
-  flex-wrap: wrap;                    
-  margin: 18px auto 6px auto;
+  gap: 32px;
+  padding: 10px 0;
 }
-.allocInput {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.svy-chance {
+  font-weight: 650;
+  font-size: 1rem;
+  letter-spacing: .2px;
 }
-.allocInput label {
-  font-size: 0.95rem;
+
+/* Return pill (rounded, soft glow) */
+.svy-pill {
+  display: inline-block;
+  min-width: 115px;
+  text-align: center;
+  padding: 2px 4px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--zero-edge);
+  background: var(--zero-bg);
+  color: var(--zero-ink);
   font-weight: 600;
-  margin-bottom: 6px;
-  text-align: center;
+  font-size: 0.95rem;
 }
-.pctField {
-  display: flex;
-  align-items: center;
+
+/* Match JS: signClass => gain | loss | neutral */
+.svy-pill.gain {
+  background: var(--pos-bg);
+  border-color: var(--pos-edge);
+  color: var(--pos-ink);
 }
-.pctField input {
-  width: clamp(88x, 6vw, 110px);
-  text-align: center;
-  padding: 6px 8px;
-  border: 1px solid #d0d0d5;
+.svy-pill.loss {
+  background: var(--neg-bg);
+  border-color: var(--neg-edge);
+  color: var(--neg-ink);
+}
+.svy-pill.neutral {
+  background: var(--zero-bg);
+  border-color: var(--zero-edge);
+  color: var(--zero-ink);
+}
+
+/* Optional highlight ring (Header prop: highlight) */
+.svy-pill--hl { outline: 2px solid rgba(253, 224, 71, 0.45); }
+
+/* Bulleted list inside Option B */
+.svy-bullets { margin: 0; padding-left: 0; list-style: none; }
+.svy-bullets--tight .svy-line { padding: 1px 0; }
+
+/* Compact chip row (collapsed header) */
+.svy-collapsed { margin: 0 0 6px 0; padding: 0; }
+.svy-chipRow { display: flex; flex-wrap: wrap; gap: 8px; }
+.svy-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 2px 4px;
+  border: 1px solid #27344c;
   border-radius: 8px;
-  background: #fff;
-  font-size: 0.95rem;
+  background: #cedfef;
 }
-.pctSuffix {
-  margin-left: 4px;
-  font-size: 0.95rem;
-  color: #333;
+.svy-chipLabel { font-weight: 700; color: #374151; }
+.svy-chipVal.pos  { color: #15803d; }
+.svy-chipVal.neg  { color: #b91c1c; }
+.svy-chipVal.zero { color: #374151; }
+.svy-chipVal.infl { color: #2563eb; }
+
+/* Inflation pill used in instruction list */
+.svy-pillInfo {
+  display: inline-block;
+  padding: 1px 6px;
+  color: var(--infl-ink);
+  font-weight: 800;
+}
+.svy-pillInfo--zero { color: #1e3a8a; }
+
+/* Footer area (for “Proceed to Allocation” button) */
+.svy-footer { display: flex; justify-content: flex-end; margin: 10px 0 12px; }
+
+/* Dashed placeholder slot (optional – for mock “Outcome” boxes) */
+.svy-pillSlot {
+  display: inline-block;
+  min-width: 148px;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px dashed #0f3a4a99;
+  color: #0f3a4a;
+  background: transparent;
 }
 
-/* Amounts line */
-.mixText { margin-top: 6px; font-size: 0.95rem; }
-
-/* Blurred/disabled panel for first scenario explanation focus */
-.panel.is-blurred {
-  filter: blur(3px);
-  opacity: 0.6;
-  pointer-events: none;
-}
-@media (max-width: 480px) {
-  .panel.is-blurred { filter: blur(3.5px); }
-}
-
-@media (max-width: 640px) {
-  .allocHandle { width: 28px; height: 28px; } 
+/* Responsive: stack cards on narrow screens */
+@media (max-width: 720px) {
+  .svy-row { grid-template-columns: 1fr; }
 }
