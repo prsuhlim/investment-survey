@@ -48,6 +48,12 @@ export default function AllocationPanel({
   const outcomeColor = (amt) =>
     amt === 0 ? "#374151" : amt > 0 ? "#0f7a35" : "#b44a3e";
 
+  // "+$..." for amt >= 0, "-$..." for amt < 0
+  const fmtSigned = (amt) => {
+    const formattedAbs = moneyFmt.format(Math.abs(amt));
+    return amt < 0 ? "-" + formattedAbs : "+" + formattedAbs;
+  };
+
   // Track whether the user has touched/changed the allocation
   const [hasTouched, setHasTouched] = React.useState(false);
   React.useEffect(() => {
@@ -174,18 +180,18 @@ export default function AllocationPanel({
             <>
               This portfolio has a <b>100% chance</b> of{" "}
               <b style={{ color: outcomeColor(detAmt) }}>
-                {moneyFmt.format(Math.abs(detAmt))}
+                {fmtSigned(detAmt)}
               </b>.
             </>
           ) : (
             <>
               This portfolio has a <b>{(P * 100).toFixed(0)}% chance</b> of{" "}
               <b style={{ color: outcomeColor(upAmt) }}>
-                {moneyFmt.format(Math.abs(upAmt))}
+                {fmtSigned(upAmt)}
               </b>{" "}
               and a <b>{((1 - P) * 100).toFixed(0)}% chance</b> of{" "}
               <b style={{ color: outcomeColor(dnAmt) }}>
-                {moneyFmt.format(Math.abs(dnAmt))}
+                {fmtSigned(dnAmt)}
               </b>.
             </>
           )}
